@@ -58,7 +58,6 @@ module.exports = function(RED) {
                 lastmsg.payload = o
                 // node.log("rtl_433: skipped dup message: " + JSON.stringify(o));
               } else {
-                o["ts"] = Math.round(+new Date()/1000);
                 lastmsg.payload = o
                 // node.log("rtl_433: send message:        " + JSON.stringify(o));
                 node.send([lastmsg,null,null]);
