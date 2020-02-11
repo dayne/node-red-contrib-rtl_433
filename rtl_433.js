@@ -48,15 +48,24 @@ module.exports = function(RED) {
           if (RED.settings.verbose) { node.log("out: "+data); }
           line += data.toString();
           var bits = line.split("\n");
+          // node.log("rtl_433: bits.length = " + bits.length);
           while (bits.length > 1) {
             var b = bits.shift();
             // node.log(b); // debugging only
             o = tryParseJSON( b );
             if (o) {
-              lastmsg.payload = o
-              node.send([lastmsg,null,null]);
+              if ( JSON.stringify(lastmsg.payload) === JSON.stringify(o) ) {
+                lastmsg.payload = o
+                // node.log("rtl_433: skipped dup message: " + JSON.stringify(o));
+              } else {
+                o["ts"] = Math.round(+new Date()/1000);
+                lastmsg.payload = o
+                // node.log("rtl_433: send message:        " + JSON.stringify(o));
+                node.send([lastmsg,null,null]);
+              }
             } else {
-              
+              // not JSON
+              node.log("rtl_433 STDOUT: "+o);
             }
           }
           line = bits[0];
