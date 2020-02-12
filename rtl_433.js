@@ -73,7 +73,23 @@ module.exports = function(RED) {
         node.child.stderr.on("data", function (data) {
           node.log("rtl_433 STDERR:  "+data);
         });
+       
+        node.child.on('close', function (code,signal) {
+          if (RED.settings.verbose) { node.log("rtl_433 ret: "+code+":"+signal); }
+          node.running = false;
+          node.child = null;
+          var rc = code;
+          if (code === null ) { rc = signal; }
+          node.send([null,null,{payload:rc}]);
+          node.status({fill:"red",shape:"ring",text:"stopped"});
+        });
         
+        node.child.on('error', function(err) {
+          if (err.errno === "ENOENT") { node.warn('Command not found'); }
+          else if (err.errno === "EACCES") { node.warn('Command not executable'); }
+          else { node.log('error: ' + err); }
+          node.status({fill:"red",shape:"ring",text:"error"});
+        });
       }
       catch(e) {
         if (e.errno === "ENOENT" ) { node.warn("Command not found: "+node.cmd); } 
@@ -85,6 +101,15 @@ module.exports = function(RED) {
         node.status({fill:"red",shape:"ring",text:"error"});
         node.running = false;
       }
+    }
+
+    if (node.redo === true) {
+      var loop = setInterval( function() {
+        if (!node.running) {
+          node.warn("Restarting : " + node.cmd);
+          runit();
+        }
+      }, 10000);  // Restart after 10 secs if required
     }
 
     node.on("close", function(done) {
