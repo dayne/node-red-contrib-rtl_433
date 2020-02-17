@@ -2,7 +2,7 @@
   "name": "node-red-contrib-rtl_433",
   "version": "0.0.2",
   "description": "rtl_433 node that outputs any parsable chirps from 433 devices decodable by the rtl_433 tool.",
-  "main": "rtl_433.js",
+  "main": "rtl_433/rtl_433.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/dayne/node-red-contrib-rtl_433#readme",
   "node-red": {
     "nodes": {
-      "rtl_433": "rtl_433.js"
+      "rtl_433": "rtl_433/rtl_433.js"
     },
     "license": "Apache-2.0",
     "repository": "https://github.com/dayne/node-red-contrib-rtl_433/"
