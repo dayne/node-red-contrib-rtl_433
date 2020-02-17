@@ -22,5 +22,30 @@
 </script>
 
 <script type="text/html" data-help-name="rtl_433">
-  <p>A node to stream all rtl_433 decoded messages into a flow</p>
+  <p>
+  A node to stream all rtl_433 decoded messages into a flow as a json payload.  <pre>rtl_433</pre> is a program to decode radio tranmissions from devices on the ISM (433 Mhz) band (and other frequencies). 
+  
+  The contents of each message payload will be dependant on the trasmission device being decoded.
+
+  <h3>Outputs</h3>
+     <ol class="node-ports">
+         <li>Standard output
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">json</span></dt>
+                 <dd>payload is the JSON output of <pre>rtl_433</pre> decoded messages.</dd>
+             </dl>
+         </li>
+     </ol>
+
+  <h3>Details</h3>
+    <p><code>msg.payload</code> is whatever the decoded contents of a 433 broadcast.
+    This will be formatted however the device or the decoder is done.
+
+  <h3>References</h3>
+    <ul>
+      <li><a href="https://github.com/dayne/node-red-conrib-rtl_433">node-red-contrib-rtl_433</a> - github repo for this node.
+      <li><a href="https://github.com/merbanan/rtl_433">rtl_433</a> - github repo for the <pre>rtl_433</pre>.
+    </ul>
+
+  </p>
 </script>
