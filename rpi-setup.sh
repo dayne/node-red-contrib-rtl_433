@@ -1,0 +1,168 @@
+#!/bin/bash
+
+# https://serverfault.com/a/670812 # github.com/gdbtek
+# some function credits here go to Nam Nguyen for clean
+# bash support functions. The functions here are under MIT license
+
+function have_command()
+{
+	info "checking for command: $1"
+	which $1 > /dev/null 2>&1
+	if [ $? -eq 0 ]; then
+		echo "we have command: $1" && return 0
+	else
+		echo "missing command $1" && return 1
+	fi	
+}
+
+function info()
+{
+    local -r message="${1}"
+
+    echo -e "\033[1;36m${message}\033[0m" 2>&1
+}
+
+function trimString()
+{
+    local -r string="${1}"
+
+    sed 's,^[[:blank:]]*,,' <<< "${string}" | sed 's,[[:blank:]]*$,,'
+}
+
+function isEmptyString()
+{
+    local -r string="${1}"
+
+    if [[ "$(trimString "${string}")" = '' ]]
+    then
+        echo 'true' && return 0
+    fi
+
+    echo 'false' && return 1
+}
+
+function getLastAptGetUpdate()
+{
+    local aptDate="$(stat -c %Y '/var/cache/apt')"
+    local nowDate="$(date +'%s')"
+
+    echo $((nowDate - aptDate))
+}
+
+function runAptGetUpdate()
+{
+    local updateInterval="${1}"
+
+    local lastAptGetUpdate="$(getLastAptGetUpdate)"
+
+    if [[ "$(isEmptyString "${updateInterval}")" = 'true' ]]
+    then
+        # Default To 24 hours
+        updateInterval="$((24 * 60 * 60))"
+    fi
+
+    if [[ "${lastAptGetUpdate}" -gt "${updateInterval}" ]]
+    then
+        info "apt-get update"
+        sudo apt-get update -m
+    else
+        local lastUpdate="$(date -u -d @"${lastAptGetUpdate}" +'%-Hh %-Mm %-Ss')"
+
+        info "\nSkip apt-get update because its last run was '${lastUpdate}' ago"
+    fi
+}
+
+function checkAptPackage()
+{
+  local -r package="${1}"
+  dpkg -s ${package} > /dev/null 2>&1
+  if [ $? -eq 0 ]; then
+    echo "${package} already installed"
+    return 0
+  else
+    echo "${package} not installed"
+    return 1
+  fi
+}
+
+function installAptPackage()
+{
+  local -r package="${1}"
+  checkAptPackage ${package}
+  if [ $? -eq 1 ]; then
+    sudo apt install ${package}
+  fi
+}
+
+function installAptPackages()
+{
+  local -r requested_packages=${@}
+  local install_packages=()
+  for pkg in $requested_packages; do
+    checkAptPackage ${pkg}
+    if [ $? -eq 1 ]; then
+      install_packages+=($pkg)
+    fi
+  done
+  if [[ ${#install_packages} > 0 ]]; then
+    packages=$(IFS=" " eval 'echo "${install_packages[*]}"')
+    echo "packages that need installing: ${packages}"
+    sudo apt install ${packages}
+  fi
+}
+
+function install_rtl_433() {
+
+runAptGetUpdate
+installAptPackages libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config git
+
+if [ ! -d apps ]; then
+	mkdir apps
+	cd apps
+	git clone https://github.com/merbanan/rtl_433.git 
+	cd rtl_433
+else
+	cd apps/rtl_433
+fi
+
+if [ ! -d build ]; then
+	mkdir build
+fi
+pushd .
+cd build
+cmake ../
+if [ $? -eq 1 ]; then
+	echo "cmake failed - debug that"
+	exit 1
+fi
+
+make
+if [ $? -eq 1 ]; then
+	echo "make failed - debug that"
+	exit 1
+fi
+
+sudo make install
+if [ $? -eq 1 ]; then
+	echo "make install failed - debug that"
+	exit 1
+else
+	echo "rtl_433 tools installed into /usr/local/"
+fi
+popd
+}
+
+if [ ! -f /etc/modprobe.d/blacklist-rtl.conf ]; then
+	echo "blacklist dvb_usb_rtl28xxu" | sudo tee -a /etc/modprobe.d/blacklist-rtl.conf
+	echo "blacklist file added - you need to reboot later"
+fi
+
+if [ "${1}" == "force" ]; then
+	install_rtl_433 force
+elif have_command rtl_433; then
+	echo "rtl_433 detected - skipping install"
+else
+	install_rtl_433
+fi
+
+echo "install completed"

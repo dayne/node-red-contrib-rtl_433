@@ -19,35 +19,34 @@ nodeRED.
 
 ###  Install the `rtl_433`
 
-You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.
+You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.  Those on Raspbian, Ubuntu, or Debian based systems should be safe to use the following helper script to do this work:
 
+```
+curl https://github.com/dayne/node-red-contrib-rtl_433/master/rpi-setup.sh | bash
+```
+
+After that completes and you reboot you should be able to run:
 ```
 rtl_433 -F json
 ```
+
+Success looks like the command running and capturing decoded messages from devices chirping.
 
 ### Install the node
 
 Run the following command in your Node-RED user directory - typically
 `~/.node-red`
+
+Example:
 ```
+cd ~/.node-red
 npm i node-red-contrib-rtl_433
 ```
 
-## Usage
+### Usage
 
-I'll explain after I validate this works in a reasonable way and I write the
-help page.
+Install the node and then start writing flows. More examples later once folks contribute them.
 
-For now understand this is a focused node-red node that is derived heavily from
-the node-red-daemon node at https://github.com/node-red/node-red-nodes/blob/master/utility/daemon/daemon.js
+### Credits
 
-https://nodered.org/docs/creating-nodes/
-* `npm install <location of node module>`
-
-https://nodered.org/docs/creating-nodes/appearance
-* https://fontawesome.com/v4.7.0/icons/
-* Hrrm: https://klarsys.github.io/angular-material-icons/
-
-hints:
-* https://stackoverflow.com/questions/14332721/node-js-spawn-child-process-and-get-terminal-output-live
-* https://github.com/nodejs/help/issues/1668
+This node is derived from the [`node-red-daemon`](https://github.com/node-red/node-red-nodes/blob/master/utility/daemon/daemon.js) node and focused on the specific command `rtl_433` usage.

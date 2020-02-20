@@ -11,7 +11,9 @@
     "url": "git+https://github.com/dayne/node-red-contrib-rtl_433.git"
   },
   "keywords": [
-    "rtl_433"
+    "node-red",
+    "rtl_433",
+    "radio"
   ],
   "author": "Dayne Broderson",
   "license": "Apache-2.0",
