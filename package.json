@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-rtl_433",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "RTL_433 nodeRED node outputs message payloads from the rtl_433 tool.",
   "main": "rtl_433/rtl_433.js",
   "scripts": {

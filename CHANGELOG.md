@@ -7,6 +7,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.2] - 2020-03-01
+- Improved and rename the `install-rtl_433-app`. Fixed links in README to the
+  script
+- Cleaned up package description
+
 ## [0.1.1] - 2020-02-19
 - Added 'node-red' to `package.js` keywords section to allow this to be discoverable on https://flows.nodered.org
 - Cleaned up README and added install instructions for the `rtl_433` tool stack.
