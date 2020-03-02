@@ -22,7 +22,7 @@ nodeRED.
 You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.  Those on Raspbian, Ubuntu, or Debian based systems should be safe to use the following helper script to do this work:
 
 ```
-curl https://github.com/dayne/node-red-contrib-rtl_433/master/rpi-setup.sh | bash
+curl https://github.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app | bash
 ```
 
 After that completes and you reboot you should be able to run:
