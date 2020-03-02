@@ -112,44 +112,52 @@ function installAptPackages()
 }
 
 function install_rtl_433() {
+  echo "installing build dependancies"
+  runAptGetUpdate
+  installAptPackages libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config git
 
-runAptGetUpdate
-installAptPackages libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config git
+  if [ ! -d apps ]; then
+    echo "creating an apps dir for rtl_433 application clone"
+	  mkdir apps
+  else
+    cd apps
+  fi
 
-if [ ! -d apps ]; then
-	mkdir apps
-	cd apps
-	git clone https://github.com/merbanan/rtl_433.git 
-	cd rtl_433
-else
-	cd apps/rtl_433
-fi
+  if [ ! -d rtl_433 ]; then
+    echo "cloning latest merbanan/rtl_433"
+	  git clone https://github.com/merbanan/rtl_433.git 
+	  cd rtl_433
+  else
+    echo "found existing clone fo rtl_433 -- updating with: git pull"
+    cd rtl_433
+    git pull
+  fi
 
-if [ ! -d build ]; then
-	mkdir build
-fi
-pushd .
-cd build
-cmake ../
-if [ $? -eq 1 ]; then
-	echo "cmake failed - debug that"
-	exit 1
-fi
+  if [ ! -d build ]; then
+	  mkdir build
+  fi
+  pushd .
+  cd build
+  cmake ../
+  if [ $? -eq 1 ]; then
+	  echo "cmake failed - debug that"
+	  exit 1
+  fi
 
-make
-if [ $? -eq 1 ]; then
-	echo "make failed - debug that"
-	exit 1
-fi
-
-sudo make install
-if [ $? -eq 1 ]; then
-	echo "make install failed - debug that"
-	exit 1
-else
-	echo "rtl_433 tools installed into /usr/local/"
-fi
-popd
+  make
+  if [ $? -eq 1 ]; then
+	  echo "make failed - debug that"
+	  exit 1
+  fi
+  
+  sudo make install
+  if [ $? -eq 1 ]; then
+	  echo "make install failed - debug that"
+	  exit 1
+  else
+	  echo "rtl_433 tools installed into /usr/local/"
+  fi
+  popd
 }
 
 if [ ! -f /etc/modprobe.d/blacklist-rtl.conf ]; then
@@ -158,11 +166,15 @@ if [ ! -f /etc/modprobe.d/blacklist-rtl.conf ]; then
 fi
 
 if [ "${1}" == "force" ]; then
+  echo "forcing install"
 	install_rtl_433 force
 elif have_command rtl_433; then
-	echo "rtl_433 detected - skipping install"
+	echo "rtl_433 detected - skipping install - add the 'force' option like so:"
+  echo "     ./install-rtl_433-app force"
+  exit 
 else
+  echo "rtl_433 not detected - attempting to install"
 	install_rtl_433
+  echo "install completed"
 fi
 
-echo "install completed"
