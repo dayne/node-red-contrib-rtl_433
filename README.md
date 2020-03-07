@@ -36,7 +36,9 @@ Success looks like the command running and capturing decoded messages from devic
 
 ### Install the node
 
-Run the following command in your Node-RED user directory - typically
+**recommended**: Install the node via the NodeRED palette manager.
+
+**Local clone**: If you want to hack on the code you can clone this repository locally and run the following command in your Node-RED user directory - typically
 `~/.node-red`
 
 Example:
