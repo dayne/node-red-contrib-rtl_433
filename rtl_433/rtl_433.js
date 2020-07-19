@@ -180,7 +180,7 @@ module.exports = function(RED) {
 				this.child.kill(this.closer);
 				logVerbose(this.cmd + " stopped");
 			} else {
-				setTimeout(done, 100);
+				setTimeout(done, 100); // Why?
 			}
 
 			this.status({});
