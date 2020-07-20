@@ -3,7 +3,8 @@
         category: 'input',
         color: '#a6bbcf',
         defaults: {
-            name: {value:""}
+            name: {value:""},
+            usbid: {value:""}
         },
         inputs:0,
         outputs:1,
@@ -18,13 +19,15 @@
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
+        <label for="node-input-usbid"><i class="icon-tag"></i> Usb Id</label>
+        <input type="text" id="node-input-usbid" placeholder="usb id">
     </div>
 </script>
 
 <script type="text/html" data-help-name="rtl_433">
   <p>
   A node to stream all rtl_433 decoded messages into a flow as a json payload.  <tt>rtl_433</tt> is a program to decode radio tranmissions from devices on the ISM (433 Mhz) band (and other frequencies).  <b><tt>rtl_433</tt></b> command has to be installed and working. See <a href="https://github.com/dayne/node-red-contrib-rtl_433/blob/master/README.md" target="_blank">node-red-contrib-rtl_433 README</a>
-  
+
   The contents of each message payload will be dependant on the trasmission device being decoded.
 
   <h3>Outputs</h3>
@@ -39,7 +42,9 @@
 
   <h3>Details</h3>
     <p><code>msg.payload</code> is whatever the decoded contents of a 433 broadcast.
-    This will be formatted however the device or the decoder is done.
+    This will be formatted however the device or the decoder is done. <br>
+
+    usbid may be left blank to auto detect the usb id of your sdr but note that auto detect will only work with rtl-sdr, if you aren't recieving any data, this field is likely the culprit. Find your sdr's vid and pid using lsusb <code> Example: 0bda:2838 </code>.
 
   <h3>References</h3>
     <ul>

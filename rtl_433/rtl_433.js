@@ -1,6 +1,13 @@
-module.exports = function(RED) {
+const spawn = require("child_process").spawn;
+const usb = require("usb");
 
-	let spawn = require("child_process").spawn;
+module.exports = function(RED) {
+	var usbIds = [
+							 	{
+									vid:"0bda",
+									pid:"2838"
+							 	}
+							] //List of usb vid and pids for sdrs, if you want the autodetection to support more sdrs then you can add more vid and pids to this list.
 	// let child = spawn("rtl_433 -F json");
 
 	// https://stackoverflow.com/a/20392392
@@ -141,8 +148,76 @@ module.exports = function(RED) {
 
 	function logVerbose(string) {
 		if (RED.settings.verbose) {
-			node.log(string)
+			node.log(string);
 		}
+	}
+
+	function parseVidPid(string) {
+		if(string === "") {
+			return false;
+		}
+
+		split = string.split(":");
+
+		if(split.length != 2) {
+			throw 'Invalid formatting of usb id';
+		}
+
+		return {
+						vid:split[0],
+				 		pid:split[1]
+					};
+	}
+
+	function getUsbVidPids(config) {
+		let vidPid;
+
+		try {
+			vidPid = parseVidPid(config.usbid);
+		} catch {
+			throw 'Invalid formatting of usb id';
+		}
+
+		if(vidPid !== false) {
+			return [vidPid];
+		}
+
+		return usbIds;
+	}
+
+	function getUsb(vidPids) {
+		for(vidPid in vidPids) {
+			dev = usb.findbyIds(vidPid.vid, vidPid.pid);
+			if(dev !== undefined) {
+				return dev;
+			}
+		}
+
+		throw "no usb plugged in with usb id";
+	}
+
+	function validateUsbVidPids(config) {
+		try {
+			vidPids = getUsbVidPids(config);
+			getUsb(vidPids);
+		} catch err {
+			throw err;
+		}
+	}
+
+	function resetUsb(config) {
+		let vidPids = getUsbVidPids(config);
+		let device = getUsb(vidPids);
+
+		return new Promise((resolve, reject) => {
+      device.reset((err) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve();
+				}
+			});
+  	});
 	}
 
 	function Rtl433Node(config) {
@@ -158,6 +233,16 @@ module.exports = function(RED) {
 			let loop = setInterval(function() {
 				if (!this.running) {
 					this.warn("Restarting : " + this.cmd);
+					try {
+						validateUsbVidPids();
+					} catch (err) {
+						this.status({
+							fill: "red",
+							shape: "ring",
+							text: "invalid usb id"
+						});
+						return;
+					}
 					runRtl433();
 				}
 			}, 10000); // Restart after 10 secs if required
@@ -169,12 +254,16 @@ module.exports = function(RED) {
 			if (this.child != null) {
         let tout = setTimeout(function() {
 					this.child.kill("SIGKILL"); // if it takes more than 3 sec kill it anyway
-					done();
+					resetUsb()
+						.then(done);
 				}, 3000);
 
 				this.child.on("exit", function() {
-					clearTimeout(tout);
-					done();
+					resetUsb()
+						.then(() => {
+							clearTimeout(tout);
+							done();
+						});
 				});
 
 				this.child.kill(this.closer);
@@ -187,6 +276,16 @@ module.exports = function(RED) {
 		});
 
 		if (this.autorun) {
+			try {
+				validateUsbVidPids();
+			} catch (err) {
+				this.status({
+					fill: "red",
+					shape: "ring",
+					text: "invalid usb id"
+				});
+				break;
+			}
 			runRtl433(this);
 		}
 
