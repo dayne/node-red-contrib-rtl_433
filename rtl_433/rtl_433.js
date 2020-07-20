@@ -158,7 +158,7 @@ module.exports = function(RED) {
 			let loop = setInterval(function() {
 				if (!this.running) {
 					this.warn("Restarting : " + this.cmd);
-					runit();
+					runRtl433();
 				}
 			}, 10000); // Restart after 10 secs if required
 		}
