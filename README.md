@@ -1,4 +1,4 @@
-## node-red-contrib-rtl\_433 
+# node-red-contrib-rtl\_433 
 
 A [Node-RED](https://nodered.org/) node that runs an instance of the
 [rtl\_433](https://github.com/merbanan/rtl_433) tool.  `rtl_433` is a program to
@@ -51,14 +51,14 @@ cd ~/.node-red
 npm i ~/projects/node-red-contrib-rtl_433
 ```
 
-### Usage
+## Usage
 
 Install the node and then start writing flows. More examples later once folks contribute them.
 
 * `config.frequency` can be used to pass a specific frequency for `rtl_433` listen on.
 
 
-## Debugging help
+### Debugging help
 
 This node is developed/tested on two primary platforms: Ubuntu x86 and Raspbian
 on an RPi4. Here are a few notes people have tossed back on making their system
@@ -88,7 +88,7 @@ to /etc/udev/rules.d/rtl-sdr.rules and rebooting the pi.
 
 More debug discussion on this with @isramos at [issue #4](https://github.com/dayne/node-red-contrib-rtl_433/issues/2)
 
-### Credits
+## Credits
 
 This node is derived from the [`node-red-daemon`](https://github.com/node-red/node-red-nodes/blob/master/utility/daemon/daemon.js) node and focused on the specific command `rtl_433` usage.
 
