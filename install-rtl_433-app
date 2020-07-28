@@ -9,9 +9,9 @@ function have_command()
 	info "checking for command: $1"
 	which $1 > /dev/null 2>&1
 	if [ $? -eq 0 ]; then
-		echo "we have command: $1" && return 0
+		echo -e "\e[32mfound command: $1 \e[39m" && return 0
 	else
-		echo "missing command $1" && return 1
+		echo -e "\e[36missing command $1 \e[39m" && return 1
 	fi	
 }
 
