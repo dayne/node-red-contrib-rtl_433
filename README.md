@@ -34,6 +34,14 @@ rtl_433 -F json
 
 Success looks like the command running and capturing decoded messages from devices chirping.
 
+#### Raspberry Pi firmware update
+
+Recommend updating your raspberry pi to latest firmware if you have an older RPi
+you are using.  This can help prevent USB resets forcing you to unplug/replug
+the USB rtlsdrl:
+
+`sudo rpi-update` 
+
 ### Install the node
 
 **recommended**: Install the node via the NodeRED palette manager.
