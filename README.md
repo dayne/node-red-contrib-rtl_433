@@ -51,6 +51,13 @@ npm i node-red-contrib-rtl_433
 
 Install the node and then start writing flows. More examples later once folks contribute them.
 
+* `config.frequency` can be used to pass a specific frequency for `rtl_433` listen on.
+
 ### Credits
 
 This node is derived from the [`node-red-daemon`](https://github.com/node-red/node-red-nodes/blob/master/utility/daemon/daemon.js) node and focused on the specific command `rtl_433` usage.
+
+* [@isramos](https://github.com/isramos) added ability for user to enter the
+  frequency.  Allows use of the rtl_433 tool for alternative fequencies(i.e.
+  Honeywell 55800C2W running at 345Mhz)
+
