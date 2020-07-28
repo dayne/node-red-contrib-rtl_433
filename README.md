@@ -34,6 +34,36 @@ rtl_433 -F json
 
 Success looks like the command running and capturing decoded messages from devices chirping.
 
+### Install the node
+
+**recommended**: 
+Install the node via the NodeRED palette manager.
+
+**Local clone**: 
+If you want to hack on the code you can clone this repository locally you can clone project
+and install it into your local Node-RED user directory, which is typically `~/.node-red`.
+
+Example:
+```
+cd ~/projects
+git clone https://github.com/dayne/node-red-contrib-rtl_433
+cd ~/.node-red
+npm i ~/projects/node-red-contrib-rtl_433
+```
+
+### Usage
+
+Install the node and then start writing flows. More examples later once folks contribute them.
+
+* `config.frequency` can be used to pass a specific frequency for `rtl_433` listen on.
+
+
+## Debugging help
+
+This node is developed/tested on two primary platforms: Ubuntu x86 and Raspbian
+on an RPi4. Here are a few notes people have tossed back on making their system
+more stable:
+
 #### Raspberry Pi firmware update
 
 Recommend updating your raspberry pi to latest firmware if you have an older RPi
@@ -42,24 +72,21 @@ the USB rtlsdrl:
 
 `sudo rpi-update` 
 
-### Install the node
+#### rtl install failing: `usb_open error -3`
 
-**recommended**: Install the node via the NodeRED palette manager.
+The rtl installer helper app tries to make bootstrapping the `rtl_433`
+dependancy easy on Debian/Ubuntu/Raspbian system. It is by no means perfect. 
 
-**Local clone**: If you want to hack on the code you can clone this repository locally and run the following command in your Node-RED user directory - typically
-`~/.node-red`
-
-Example:
 ```
-cd ~/.node-red
-npm i node-red-contrib-rtl_433
+usb_open error -3
+Please fix the device permissions, e.g. by installing the udev rules file
+rtl-sdr.rules
 ```
 
-### Usage
+A possible fix is to copy https://github.com/keenerd/rtl-sdr/blob/master/rtl-sdr.rules
+to /etc/udev/rules.d/rtl-sdr.rules and rebooting the pi.
 
-Install the node and then start writing flows. More examples later once folks contribute them.
-
-* `config.frequency` can be used to pass a specific frequency for `rtl_433` listen on.
+More debug discussion on this with @isramos at [issue #4](https://github.com/dayne/node-red-contrib-rtl_433/issues/2)
 
 ### Credits
 

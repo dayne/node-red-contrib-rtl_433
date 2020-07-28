@@ -7,6 +7,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.3] - 2020-07-28
+- Added [@isramos](https://github.com/isramos) frequency option
+- Added note about running `rpi-update` to README
+- Color flair for `rtl_433` installer helper
+
 ## [0.1.2] - 2020-03-01
 - Improved and rename the `install-rtl_433-app`. Fixed links in README to the
   script
