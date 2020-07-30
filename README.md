@@ -66,9 +66,12 @@ more stable:
 
 #### Raspberry Pi firmware update
 
-Recommend updating your raspberry pi to latest firmware if you have an older RPi
-you are using.  This can help prevent USB resets forcing you to unplug/replug
-the USB rtlsdrl:
+If you are getting:
+```
+rtl_sdr_read_reg failed with -7
+rtl_sdr_write_reg failed with -7
+```
+Spammed in the console then it is reccomended to update the raspberry pi firmware with:
 
 `sudo rpi-update` 
 
