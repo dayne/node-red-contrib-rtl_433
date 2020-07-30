@@ -43,9 +43,7 @@ module.exports = function(RED) {
 
 				while (lines.length > 1) {
 					let l = lines.shift();
-					node.log(l)
 					let chirp = tryParseJSON(l);
-					node.log(JSON.stringify(chirp))
 
 					if (chirp) {
 						/*
