@@ -1,5 +1,5 @@
 module.exports = function(RED) {
-  
+
   var spawn = require("child_process").spawn;
   // var child = spawn("rtl_433 -F json");
 
@@ -25,9 +25,12 @@ module.exports = function(RED) {
     RED.nodes.createNode(this,config);
     this.running = false;
     this.cmd = "rtl_433";
-    this.args = ["-F","json"];
-    if(config.frequency){
+    this.args = ["-F", "json"];
+    if (config.frequency) {
       this.args.push("-f", config.frequency)
+    }
+    if (config.protocols) {
+      config.protocols.split(/[\s,]+/).forEach(p => this.args.push("-R", p));
     }
     this.op = "lines"
     this.autorun = true;
@@ -72,11 +75,11 @@ module.exports = function(RED) {
           }
           line = bits[0];
         });
-        
+
         node.child.stderr.on("data", function (data) {
           node.log("rtl_433 STDERR:  "+data);
         });
-       
+
         node.child.on('close', function (code,signal) {
           if (RED.settings.verbose) { node.log("rtl_433 ret: "+code+":"+signal); }
           node.running = false;
@@ -86,7 +89,7 @@ module.exports = function(RED) {
           node.send([null,null,{payload:rc}]);
           node.status({fill:"red",shape:"ring",text:"stopped"});
         });
-        
+
         node.child.on('error', function(err) {
           if (err.errno === "ENOENT") { node.warn('Command not found'); }
           else if (err.errno === "EACCES") { node.warn('Command not executable'); }
@@ -95,10 +98,10 @@ module.exports = function(RED) {
         });
       }
       catch(e) {
-        if (e.errno === "ENOENT" ) { node.warn("Command not found: "+node.cmd); } 
-        else if (e.errno === "EACCES") { node.warn("Command not executable: "+node.cmd); } 
-        else { 
-          node.log("error: " + e); 
+        if (e.errno === "ENOENT" ) { node.warn("Command not found: "+node.cmd); }
+        else if (e.errno === "EACCES") { node.warn("Command not executable: "+node.cmd); }
+        else {
+          node.log("error: " + e);
           node.debug("rtl_433 error: "+e);
         }
         node.status({fill:"red",shape:"ring",text:"error"});
@@ -132,7 +135,7 @@ module.exports = function(RED) {
       } else { setTimeout(function() { done(); }, 100); }
       node.status({});
     });
-    
+
     if(this.autorun) { runRtl433(); }
 
     //node.on("input", function(msg) {
