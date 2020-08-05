@@ -7,6 +7,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.4] - 2020-08-04
+- Added [@ondras](https://github.com/ondras) option to specify additional rtl_433 protocols (the -R option). 
+- @ondras also separated individual config items into proper rows for better UI formatting.
+
 ## [0.1.3] - 2020-07-28
 - Added [@isramos](https://github.com/isramos) frequency option
 - Added note about running `rpi-update` to README
