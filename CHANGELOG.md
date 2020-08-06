@@ -7,6 +7,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.5] - 2020-08-06
 - De-duplicate multiple messages a refactored contribution from [@Id405](https://github.com/Id405)
 
 ## [0.1.4] - 2020-08-04
