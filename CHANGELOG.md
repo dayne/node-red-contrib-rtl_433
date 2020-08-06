@@ -7,6 +7,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- De-duplicate multiple messages a refactored contribution from [@Id405](https://github.com/Id405)
+
 ## [0.1.4] - 2020-08-04
 - Added [@ondras](https://github.com/ondras) option to specify additional rtl_433 protocols (the -R option). 
 - @ondras also separated individual config items into proper rows for better UI formatting.

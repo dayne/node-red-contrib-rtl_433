@@ -38,7 +38,7 @@ module.exports = function(RED) {
     var lastmsg = {};
 
     function runRtl433() {
-      var line = "";
+    let line = "";
       // node.status({fill:"grey", shape:"ring", text:"no command rtl_433"});
       // node.log("runRtl433(): launched");
       try {
@@ -53,27 +53,30 @@ module.exports = function(RED) {
           // only send lines that are parsable JSON data
           if (RED.settings.verbose) { node.log("out: "+data); }
           line += data.toString();
-          var bits = line.split("\n");
-          // node.log("rtl_433: bits.length = " + bits.length);
-          while (bits.length > 1) {
-            var b = bits.shift();
-            // node.log(b); // debugging only
-            o = tryParseJSON( b );
-            if (o) {
-              if ( JSON.stringify(lastmsg.payload) === JSON.stringify(o) ) {
-                lastmsg.payload = o
-                // node.log("rtl_433: skipped dup message: " + JSON.stringify(o));
-              } else {
-                lastmsg.payload = o
-                // node.log("rtl_433: send message:        " + JSON.stringify(o));
+          let lines = line.split("\n");
+        
+          while (lines.length > 1) {
+            let l = lines.shift();
+            let chirp = tryParseJSON(l);
+
+            if(chirp) {
+              // some sensors send multiple messages to ensure data delivery
+              // there could be smarter handling of this but for now
+              // we'll just drop any messages same as the last. One gotcha is
+              // some sensors provide a sequence_num attribute that should
+              // be removed before checking for equality.
+              delete chirp.sequence_num;
+              
+              if ( JSON.stringify(lastmsg.payload) !== JSON.stringify(chirp) ) {
+                lastmsg.payload = chirp
                 node.send([lastmsg,null,null]);
               }
             } else {
               // not JSON
-              node.log("rtl_433 STDOUT: "+o);
+              node.log("rtl_433 STDOUT: "+chirp);
             }
           }
-          line = bits[0];
+          line = lines[0];
         });
 
         node.child.stderr.on("data", function (data) {
