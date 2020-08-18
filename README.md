@@ -97,3 +97,5 @@ This node is derived from the [`node-red-daemon`](https://github.com/node-red/no
   Honeywell 55800C2W running at 345Mhz)
 * [@ondras](https://github.com/ondras) added option to specify additional rtl_433 protocols (the `-R ` option).
 * [@Id405](https://github.com/Id405) de-duplicate chirp code.
+* [@deisterhold](https://github.com/deisterhold) added allow specification of
+  specific device option.

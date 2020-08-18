@@ -7,6 +7,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.6] - 2020-08-18
+- [@deisterhold](https://github.com/deisterhold) added device selection configuration
+- Bug fix @Id405 fix call to a previously renamed function
+
 ## [0.1.5] - 2020-08-06
 - De-duplicate multiple messages a refactored contribution from [@Id405](https://github.com/Id405)
 
