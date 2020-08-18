@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
+     
+      - name: Run ESLint
+          uses: stefanoeb/eslint-action@1.0.2
 
       - name: Set up Node.js
         uses: actions/setup-node@v1
