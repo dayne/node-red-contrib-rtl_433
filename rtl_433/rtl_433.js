@@ -26,6 +26,9 @@ module.exports = function(RED) {
     this.running = false;
     this.cmd = "rtl_433";
     this.args = ["-F", "json"];
+    if (config.device) {
+      this.args.push("-d", config.device)
+    }
     if (config.frequency) {
       this.args.push("-f", config.frequency)
     }
