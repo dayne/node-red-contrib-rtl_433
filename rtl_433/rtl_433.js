@@ -116,7 +116,7 @@ module.exports = function(RED) {
       var loop = setInterval( function() {
         if (!node.running) {
           node.warn("Restarting : " + node.cmd);
-          runit();
+          runRtl433()
         }
       }, 10000);  // Restart after 10 secs if required
     }
