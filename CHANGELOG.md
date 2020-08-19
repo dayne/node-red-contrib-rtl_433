@@ -7,6 +7,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- eslint delinter to fix javascript styling in code.  Using Github standard.
+
 ## [0.1.6] - 2020-08-18
 - [@deisterhold](https://github.com/deisterhold) added device selection configuration
 - Bug fix @Id405 fix call to a previously renamed function
