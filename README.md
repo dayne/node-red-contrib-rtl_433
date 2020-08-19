@@ -19,25 +19,27 @@ nodeRED.
 
 ###  Install the `rtl_433`
 
-You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.  Those on Raspbian, Ubuntu, or Debian based systems should be safe to use the following helper script to do this work:
+You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.  Detailed instructions for isntallation available from the [merbanan/rtl_433 README](https://github.com/merbanan/rtl_433/blob/master/README.md).
 
+Those on Raspbian, Ubuntu, or Debian based systems could use the following helper script to install it:
 ```
 curl
 https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app
 | bash
 ```
 
-After that completes and you reboot you should be able to run:
+**`reboot`** after that is completed adn test it by running:
+
 ```
 rtl_433 -F json
 ```
-
 Success looks like the command running and capturing decoded messages from devices chirping.
 
 ### Install the node
 
 **recommended**: 
-Install the node via the NodeRED palette manager.
+Install the node via the NodeRED palette manager. 
+![GUI Pallet Install](https://github.com/dayne/node-red-contrib-rtl_433/master/docs/node-red-common-rtl_433-install.gif)
 
 **Local clone**: 
 If you want to hack on the code you can clone this repository locally you can clone project
@@ -55,8 +57,15 @@ npm i ~/projects/node-red-contrib-rtl_433
 
 Install the node and then start writing flows. More examples later once folks contribute them.
 
-* `config.frequency` can be used to pass a specific frequency for `rtl_433` listen on.
+* `config.frequency` - pass a `-f <frequency>` option for specific frequency for `rtl_433` listen on.
+* `config.device` - pass a `-d` option to select a specific device: 
+  `<RTL-SDR USB device index>` | :<RTL-SDR USB device serial> | <SoapySDR device query> | rtl_tcp`
+* `config.protocols` - pass `-R <device>` option to enable only specified device decoding protocol.
 
+Recommended quick start is to drop in the node and connect up to the debug tab
+like so:
+
+![Node to Debug Demo](https://github.com/dayne/node-red-contrib-rtl_433/master/docs/node-red-common-rtl_433-demo.gif)
 
 ### Debugging help
 
@@ -66,11 +75,19 @@ more stable:
 
 #### Raspberry Pi firmware update
 
-Recommend updating your raspberry pi to latest firmware if you have an older RPi
-you are using.  This can help prevent USB resets forcing you to unplug/replug
-the USB rtlsdrl:
+Recommend updating your raspberry pi to latest firmware - especially if you are
+using an older pi:
 
-`sudo rpi-update` 
+`sudo rpi-update`
+
+This can help prevent USB resets forcing you to unplug/replug
+the USB rtlsdrl. 
+
+Also needed if you are getting errors like below spamming in the console:
+```
+the USB rtlsdrl:  rtl_sdr_read_reg failed with -7
+rtl_sdr_write_reg failed with -7
+```
 
 #### rtl install failing: `usb_open error -3`
 
