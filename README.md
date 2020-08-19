@@ -39,7 +39,7 @@ Success looks like the command running and capturing decoded messages from devic
 
 **recommended**: 
 Install the node via the NodeRED palette manager. 
-![GUI Pallet Install](https://github.com/dayne/node-red-contrib-rtl_433/master/docs/node-red-common-rtl_433-install.gif)
+![GUI Pallet Install](https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/docs/node-red-common-rtl_433-install.gif)
 
 **Local clone**: 
 If you want to hack on the code you can clone this repository locally you can clone project
@@ -65,7 +65,7 @@ Install the node and then start writing flows. More examples later once folks co
 Recommended quick start is to drop in the node and connect up to the debug tab
 like so:
 
-![Node to Debug Demo](https://github.com/dayne/node-red-contrib-rtl_433/master/docs/node-red-common-rtl_433-demo.gif)
+![Node to Debug Demo](https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/docs/node-red-common-rtl_433-demo.gif)
 
 ### Debugging help
 
