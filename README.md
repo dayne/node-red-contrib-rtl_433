@@ -75,19 +75,15 @@ more stable:
 
 #### Raspberry Pi firmware update
 
-Recommend updating your raspberry pi to latest firmware - especially if you are
-using an older pi:
-
-`sudo rpi-update`
-
-This can help prevent USB resets forcing you to unplug/replug
-the USB rtlsdrl. 
-
-Also needed if you are getting errors like below spamming in the console:
+If you are using a Raspberry Pi 4 with an older version of Raspian (any releases before July of 2019) and you are getting this error spammed in the console:
 ```
 the USB rtlsdrl:  rtl_sdr_read_reg failed with -7
 rtl_sdr_write_reg failed with -7
 ```
+
+then you need to update the firmware using:
+
+`sudo rpi-update`
 
 #### rtl install failing: `usb_open error -3`
 
