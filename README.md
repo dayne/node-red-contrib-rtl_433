@@ -23,9 +23,7 @@ You will need a working version of the `rtl_433` tool in your environment and va
 
 Those on Raspbian, Ubuntu, or Debian based systems could use the following helper script to install it:
 ```
-curl
-https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app
-| bash
+curl https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app | bash
 ```
 
 **`reboot`** after that is completed. 
