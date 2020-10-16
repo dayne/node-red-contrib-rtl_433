@@ -28,12 +28,14 @@ https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-
 | bash
 ```
 
-**`reboot`** after that is completed adn test it by running:
+**`reboot`** after that is completed. 
+
+Test it by running:
 
 ```
 rtl_433 -F json
 ```
-Success looks like the command running and capturing decoded messages from devices chirping.
+Success looks like the command running and capturing decoded messages from devices chirping.  If you see data chirping on that command you can close the command using `CONTROL-C`
 
 ### Install the node
 
