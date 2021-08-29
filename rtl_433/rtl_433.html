@@ -6,7 +6,10 @@
             name: {value:""},
             device: {value:""},
             frequency: {value:""},
-            protocols: {value:""}
+            protocols: {value:""},
+            flexgetter: {value:""},
+            expert: {value:""},
+            surpressChirp: {value:true}
         },
         inputs:0,
         outputs:1,
@@ -33,6 +36,18 @@
     <div class="form-row">
         <label for="node-input-protocols"><i class="icon-tag"></i> Protocols</label>
         <input type="text" id="node-input-protocols" placeholder="Extra protocols, space/comma-separated">
+    </div>
+    <div class="form-row">
+        <label for="node-input-flexgetter"><i class="icon-tag"></i> Flex Decoder</label>
+        <input type="text" id="node-input-flexgetter" placeholder="Flexible general purpose decoder">
+    </div>
+    <div class="form-row">
+        <label for="node-input-expert"><i class="icon-tag"></i> Expert</label>
+        <input type="text" id="node-input-expert" placeholder="Expert Settings for rtl_433">
+    </div>
+    <div class="form-row">
+        <label for="node-input-surpressChirp" style="width: auto">Skip duplicate messages</label>
+        <input type="checkbox" id="node-input-surpressChirp" style="display: inline-block; width: auto; vertical-align: top;">
     </div>
 </script>
 

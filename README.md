@@ -57,10 +57,16 @@ npm i ~/projects/node-red-contrib-rtl_433
 
 Install the node and then start writing flows. More examples later once folks contribute them.
 
-* `config.frequency` - pass a `-f <frequency>` option for specific frequency for `rtl_433` listen on.
-* `config.device` - pass a `-d` option to select a specific device: 
-  `<RTL-SDR USB device index>` | :<RTL-SDR USB device serial> | <SoapySDR device query> | rtl_tcp`
-* `config.protocols` - pass `-R <device>` option to enable only specified device decoding protocol.
+The config properties in the node are arguments that are passed directly to the  `rtl_433` daemon. Following options are available:
+
+* `Frequency` - passes a `-f <frequency>` option for specific frequency for `rtl_433` listen on.
+* `Device` - passes a `-d` option to select a specific device
+* `Protocols` - passes `-R <device>` option to enable only specified device decoding protocol. Multiple protocols can be listed (comma or space separated)
+* `Flex decoder` - passes `-X <decoder spec>` to the daemon. This allows to support devices where no hard coded protocol exists
+* `Expert` - passes any additional argument to the daemon. Make sure to adhere to the permissible arguments and avoid any additional quoting (`"` or `'`). 
+* `Surpress duplicate messages` - Some sensors send the same data multiple times. Default is to discard these duplicate values.
+
+For a complete reference of the `rtl_433` options refer to https://github.com/merbanan/rtl_433
 
 Recommended quick start is to drop in the node and connect up to the debug tab
 like so:
@@ -88,7 +94,7 @@ then you need to update the firmware using:
 #### rtl install failing: `usb_open error -3`
 
 The rtl installer helper app tries to make bootstrapping the `rtl_433`
-dependancy easy on Debian/Ubuntu/Raspbian system. It is by no means perfect. 
+dependency easy on Debian/Ubuntu/Raspbian system. It is by no means perfect. 
 
 ```
 usb_open error -3
