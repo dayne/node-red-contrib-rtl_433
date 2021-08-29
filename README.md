@@ -64,7 +64,7 @@ The config properties in the node are arguments that are passed directly to the 
 * `Protocols` - passes `-R <device>` option to enable only specified device decoding protocol. Multiple protocols can be listed (comma or space separated)
 * `Flex decoder` - passes `-X <decoder spec>` to the daemon. This allows to support devices where no hard coded protocol exists
 * `Expert` - passes any additional argument to the daemon. Make sure to adhere to the permissible arguments and avoid any additional quoting (`"` or `'`). 
-* `Surpress duplicate messages` - Some sensors send the same data multiple times. Default is to discard these duplicate values.
+* `Supress duplicate messages` - Some sensors send the same data multiple times. Default is to discard these duplicate values.
 
 For a complete reference of the `rtl_433` options refer to https://github.com/merbanan/rtl_433
 

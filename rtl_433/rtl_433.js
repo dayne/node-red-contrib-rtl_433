@@ -75,7 +75,7 @@ module.exports = function (RED) {
             const l = lines.shift()
             const chirp = tryParseJSON(l)
 
-            if (chirp && config.surpressChirp) {
+            if (chirp && config.supressChirp) {
               // some sensors send multiple messages to ensure data delivery
               // there could be smarter handling of this but for now
               // we'll just drop any messages same as the last. One gotcha is
@@ -87,7 +87,7 @@ module.exports = function (RED) {
                 lastmsg.payload = chirp
                 node.send([lastmsg, null, null])
               }
-            } else if (chirp && !config.surpressChirp) {
+            } else if (chirp && !config.supressChirp) {
               lastmsg.payload = chirp
               node.send([lastmsg, null, null])
             } else {
