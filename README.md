@@ -23,17 +23,17 @@ You will need a working version of the `rtl_433` tool in your environment and va
 
 Those on Raspbian, Ubuntu, or Debian based systems could use the following helper script to install it:
 ```
-curl
-https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app
-| bash
+curl https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app | bash
 ```
 
-**`reboot`** after that is completed adn test it by running:
+**`reboot`** after that is completed. 
+
+Test it by running:
 
 ```
 rtl_433 -F json
 ```
-Success looks like the command running and capturing decoded messages from devices chirping.
+Success looks like the command running and capturing decoded messages from devices chirping.  If you see data chirping on that command you can close the command using `CONTROL-C`
 
 ### Install the node
 
@@ -75,19 +75,15 @@ more stable:
 
 #### Raspberry Pi firmware update
 
-Recommend updating your raspberry pi to latest firmware - especially if you are
-using an older pi:
-
-`sudo rpi-update`
-
-This can help prevent USB resets forcing you to unplug/replug
-the USB rtlsdrl. 
-
-Also needed if you are getting errors like below spamming in the console:
+If you are using a Raspberry Pi 4 with an older version of Raspian (any releases before July of 2019) and you are getting this error spammed in the console:
 ```
 the USB rtlsdrl:  rtl_sdr_read_reg failed with -7
 rtl_sdr_write_reg failed with -7
 ```
+
+then you need to update the firmware using:
+
+`sudo rpi-update`
 
 #### rtl install failing: `usb_open error -3`
 
