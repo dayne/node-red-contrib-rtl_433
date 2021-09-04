@@ -33,6 +33,21 @@ module.exports = function (RED) {
     if (config.protocols) {
       config.protocols.split(/[\s,]+/).forEach(p => this.args.push('-R', p))
     }
+    if (config.flexgetter) {
+      // The spawn args do their own quoting
+      // Having quotes around the -X argument
+      // will throw an error in the rtl_433 daemon
+      const firstChar = config.flexgetter.charAt(0)
+      const lastChar = config.flexgetter.charAt(config.flexgetter.length - 1)
+      if ((firstChar === '\'' || firstChar === '\"') && (lastChar === '\'' || lastChar === '\"')) {
+        this.args.push('-X', config.flexgetter.slice(1, -1))
+      } else {
+        this.args.push('-X', config.flexgetter)
+      }
+    }
+    if (config.expert) {
+      this.args.push(config.expert)
+    }
     this.op = 'lines'
     this.autorun = true
     var node = this
@@ -60,7 +75,7 @@ module.exports = function (RED) {
             const l = lines.shift()
             const chirp = tryParseJSON(l)
 
-            if (chirp) {
+            if (chirp && config.supressChirp) {
               // some sensors send multiple messages to ensure data delivery
               // there could be smarter handling of this but for now
               // we'll just drop any messages same as the last. One gotcha is
@@ -72,6 +87,9 @@ module.exports = function (RED) {
                 lastmsg.payload = chirp
                 node.send([lastmsg, null, null])
               }
+            } else if (chirp && !config.supressChirp) {
+              lastmsg.payload = chirp
+              node.send([lastmsg, null, null])
             } else {
               // not JSON
               node.log('rtl_433 STDOUT: ' + chirp)
