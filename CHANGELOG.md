@@ -7,7 +7,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+
+## [0.1.7] - 2021-09-04
 - eslint delinter to fix javascript styling in code.  Using Github standard.
+- [@Sineos](https://github.com/Sineos) added new options: Flex Getter, Expert,
+  and Toggle duplicate messages.
 
 ## [0.1.6] - 2020-08-18
 - [@deisterhold](https://github.com/deisterhold) added device selection configuration
