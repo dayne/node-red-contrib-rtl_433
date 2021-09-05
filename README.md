@@ -118,5 +118,5 @@ This node is derived from the [`node-red-daemon`](https://github.com/node-red/no
 * [@Id405](https://github.com/Id405) de-duplicate chirp code.
 * [@deisterhold](https://github.com/deisterhold) added allow specification of
   specific device option.
-  [@Sineos](https://github.com/Sineos) added additional options Flex Getting,
+* [@Sineos](https://github.com/Sineos) added additional options Flex Getting,
   Expert, and Toggle duplicate messages.
