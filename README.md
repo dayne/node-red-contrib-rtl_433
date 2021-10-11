@@ -19,9 +19,9 @@ nodeRED.
 
 ###  Install the `rtl_433`
 
-You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.  Detailed instructions for isntallation available from the [merbanan/rtl_433 README](https://github.com/merbanan/rtl_433/blob/master/README.md).
+You will need a working version of the `rtl_433` tool in your environment and validate it runs correctly.  Detailed instructions for installation available from the [merbanan/rtl_433 README](https://github.com/merbanan/rtl_433/blob/master/README.md).
 
-Those on Raspbian, Ubuntu, or Debian based systems could use the following helper script to install it:
+Those on Raspbian, Ubuntu, or Debian based systems could use the following helper script to install it using theri terminal:
 ```
 curl https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app | bash
 ```
