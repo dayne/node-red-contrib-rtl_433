@@ -60,6 +60,8 @@ module.exports = function (RED) {
 
     let restartTimerID = null
 
+    node.status({}) // so status change events work from scratch
+
     function restartTimer(time = 10000) {
       if (!node.closing && !node.running) {
         node.status({ fill: 'yellow', shape: 'ring', text: 'restarting' })
