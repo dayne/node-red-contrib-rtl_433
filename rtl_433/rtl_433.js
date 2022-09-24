@@ -46,7 +46,7 @@ module.exports = function (RED) {
       }
     }
     if (config.expert) {
-      this.args.push(config.expert)
+      this.args = this.args.concat(config.expert.split(' '));
     }
     this.op = 'lines'
     this.autorun = true
