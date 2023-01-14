@@ -114,7 +114,7 @@ function installAptPackages()
 function install_rtl_433() {
   echo "installing build dependancies"
   runAptGetUpdate
-  installAptPackages libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config git
+  installAptPackages libtool libusb-1.0-0-dev librtlsdr-dev rtl-sdr build-essential autoconf cmake pkg-config git
 
   if [ ! -d apps ]; then
     echo "creating an apps dir for rtl_433 application clone"
