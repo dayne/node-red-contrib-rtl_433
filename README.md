@@ -26,6 +26,15 @@ Those on Raspbian, Ubuntu, or Debian based systems could use the following helpe
 curl https://raw.githubusercontent.com/dayne/node-red-contrib-rtl_433/master/install-rtl_433-app | bash
 ```
 
+Libusb package name has changed and might not be found.  If this happens you need to run the following command and then run the previous command
+```
+sudo apt-get install libusb-1.0-0-dev
+```
+or if that doesnt work, install all needed libraries
+```
+sudo apt-get install libtool libusb-1.0-0-dev librtlsdr-dev rtl-sdr doxygen git cmake
+```
+
 **`reboot`** after that is completed. 
 
 Test it by running:

@@ -22,6 +22,7 @@ module.exports = function (RED) {
   function Rtl433Node (config) {
     RED.nodes.createNode(this, config)
     this.running = false
+    this.restartChildOnClose = false
     this.cmd = 'rtl_433'
     this.args = ['-F', 'json']
     if (config.device) {
@@ -48,16 +49,44 @@ module.exports = function (RED) {
     if (config.expert) {
       this.args = this.args.concat(config.expert.split(' '));
     }
+    if (config.restartChildOnClose) {
+      this.restartChildOnClose = true
+    }
     this.op = 'lines'
     this.autorun = true
+    this.closing = false
     var node = this
     var lastmsg = {}
+
+    let restartTimerID = null
+
+    node.status({ fill: 'yellow', shape: 'dot', text: 'starting' }) // so status change events work
+
+    function restartTimer(time = 10000) {
+      if (!node.closing && !node.running) {
+        node.status({ fill: 'yellow', shape: 'ring', text: 'restarting' })
+        restartTimerID = setTimeout(function () {
+          restart()
+        }, time)
+      }
+    }
+
+    function restart() {
+      if (!node.running) {
+        node.warn('Restarting : ' + node.cmd)
+        runRtl433()
+      }
+    }
 
     function runRtl433 () {
       let line = ''
       // node.status({fill:"grey", shape:"ring", text:"no command rtl_433"});
       // node.log("runRtl433(): launched");
       try {
+        if (node.child) {
+          node.log('killing running child')
+          node.child.kill('SIGKILL')
+        }
         node.child = spawn(node.cmd, node.args)
         if (RED.settings.verbose) { node.log(node.cmd + ' ' + JSON.stringify(node.args)) }
         node.status({ fill: 'green', shape: 'dot', text: 'listening' })
@@ -110,6 +139,9 @@ module.exports = function (RED) {
           if (code === null) { rc = signal }
           node.send([null, null, { payload: rc }])
           node.status({ fill: 'red', shape: 'ring', text: 'stopped' })
+          if (node.restartChildOnClose) {
+            restartTimer()
+          }
         })
 
         node.child.on('error', function (err) {
@@ -127,16 +159,12 @@ module.exports = function (RED) {
     }
 
     if (node.redo === true) {
-      var loop = setInterval(function () {
-        if (!node.running) {
-          node.warn('Restarting : ' + node.cmd)
-          runRtl433()
-        }
-      }, 10000) // Restart after 10 secs if required
+      restartTimer()
     }
 
     node.on('close', function (done) {
-      clearInterval(loop)
+      node.closing = true
+      clearInterval(restartTimerID)
       if (node.child != null) {
         var tout
         node.child.on('exit', function () {
