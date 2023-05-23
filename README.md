@@ -120,3 +120,5 @@ This node is derived from the [`node-red-daemon`](https://github.com/node-red/no
   specific device option.
 * [@Sineos](https://github.com/Sineos) added additional options Flex Getting,
   Expert, and Toggle duplicate messages.
+* [@MattWoodhead](https://github.com/MattWoodhead) fix libsusb version string #26
+* [@dkazubek](https://github.com/dkazubek) #26 added support for multiple parameters in export input.
