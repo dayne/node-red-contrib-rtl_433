@@ -9,7 +9,8 @@
             protocols: {value:""},
             flexgetter: {value:""},
             expert: {value:""},
-            supressChirp: {value:true}
+            supressChirp: {value:true},
+            restartChildOnClose: {value: false}
         },
         inputs:0,
         outputs:1,
@@ -48,6 +49,10 @@
     <div class="form-row">
         <label for="node-input-supressChirp" style="width: auto">Skip duplicate messages</label>
         <input type="checkbox" id="node-input-supressChirp" style="display: inline-block; width: auto; vertical-align: top;">
+    </div>
+    <div class="form-row">
+        <label for="node-input-restartChildOnClose" style="width: auto">Restart on hardware disconnect</label>
+        <input type="checkbox" id="node-input-restartChildOnClose" style="display: inline-block; width: auto; vertical-align: top;">
     </div>
 </script>
 
